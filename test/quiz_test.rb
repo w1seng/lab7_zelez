@@ -2,7 +2,7 @@
 
 require 'minitest/autorun'
 require 'tempfile'
-require_relative '../lib/quiz'
+require './lib/quiz'
 
 # Заглушка Telegram API: зберігає надіслані повідомлення.
 class FakeApi
@@ -26,7 +26,7 @@ class LoaderTest < Minitest::Test
   end
 
   def test_loads_real_questions_file
-    questions = QuizBot::Loader.load(File.join(__dir__, '..', 'data', 'questions.json'))
+    questions = QuizBot::Loader.load(File.join('data', 'questions.json'))
     assert_equal 8, questions.size
     assert(questions.all? { |q| q.options.size == 4 })
   end

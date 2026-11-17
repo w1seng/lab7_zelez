@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 require 'telegram/bot'
-require_relative 'lib/quiz'
+# Шляхи відносно поточної папки, а не через __dir__: у консолі з кодуванням
+# 866 Ruby псує кирилицю в абсолютному шляху (напр. «універ»). Тому бота
+# запускають із папки проєкту.
+require './lib/quiz'
 
 # Токен береться зі змінної середовища або з файлу .env (він у .gitignore,
 # тому не потрапляє до Git).
-env_file = File.join(__dir__, '.env')
+env_file = '.env'
 if File.exist?(env_file)
   File.foreach(env_file, encoding: 'utf-8') do |line|
     key, value = line.strip.split('=', 2)
@@ -19,7 +22,7 @@ token = ENV['TELEGRAM_BOT_TOKEN']
 abort('Задайте змінну середовища TELEGRAM_BOT_TOKEN (токен від @BotFather).') if token.to_s.empty?
 
 begin
-  questions = QuizBot::Loader.load(File.join(__dir__, 'data', 'questions.json'))
+  questions = QuizBot::Loader.load(File.join('data', 'questions.json'))
 rescue QuizBot::QuestionError => e
   abort("Помилка запитань: #{e.message}")
 end
