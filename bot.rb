@@ -30,7 +30,8 @@ end
 # Клавіатура з варіантами відповідей: по одному варіанту в рядку.
 keyboard = lambda do |options|
   Telegram::Bot::Types::ReplyKeyboardMarkup.new(
-    keyboard: options.map { |o| [o] }, one_time_keyboard: true, resize_keyboard: true
+    keyboard: options.map { |o| [Telegram::Bot::Types::KeyboardButton.new(text: o)] },
+    one_time_keyboard: true, resize_keyboard: true
   )
 end
 
